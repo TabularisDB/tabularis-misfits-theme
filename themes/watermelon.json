@@ -31,7 +31,7 @@
       "primary": "#2e8b57",
       "secondary": "#9f213c",
       "success": "#1c5f3b",
-      "warning": "#844200",
+      "warning": "#512900",
       "error": "#a11818",
       "info": "#1f5f3f"
     },
@@ -46,13 +46,13 @@
       "number": "#1f6b42",
       "boolean": "#1f5f3f",
       "date": "#a8125a",
-      "null": "#575757",
+      "null": "#535353",
       "primaryKey": "#a25100",
-      "foreignKey": "#185333",
-      "index": "#362520",
+      "foreignKey": "#1a5937",
+      "index": "#432e28",
       "modified": "#793c00",
-      "deleted": "#550d0d",
-      "new": "#185333"
+      "deleted": "#4e0c0c",
+      "new": "#1f6941"
     }
   },
   "editor": {
@@ -77,14 +77,14 @@
       "editorSuggestWidget.border": "#bf7582",
       "editorHoverWidget.background": "#ffe1e6",
       "editorHoverWidget.border": "#bf7582",
-      "editor.findMatchBackground": "#e07000",
-      "editor.findMatchHighlightBackground": "#ff840a",
+      "editor.findMatchBackground": "#e07100",
+      "editor.findMatchHighlightBackground": "#ff850a",
       "editor.wordHighlightBackground": "#ffd0d8",
       "editorWhitespace.foreground": "#bf7582",
       "scrollbarSlider.background": "#bf758299",
       "scrollbarSlider.hoverBackground": "#2e8b57aa",
       "editorError.foreground": "#a11818",
-      "editorWarning.foreground": "#844200"
+      "editorWarning.foreground": "#512900"
     },
     "rules": [
       {

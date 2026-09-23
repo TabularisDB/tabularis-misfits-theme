@@ -30,8 +30,8 @@
     "accent": {
       "primary": "#ff4fa3",
       "secondary": "#6e1abb",
-      "success": "#8f1b67",
-      "warning": "#83335d",
+      "success": "#175a44",
+      "warning": "#7b3f14",
       "error": "#990036",
       "info": "#742c9e"
     },
@@ -48,11 +48,11 @@
       "date": "#5e2a8c",
       "null": "#6c6167",
       "primaryKey": "#8a004a",
-      "foreignKey": "#2d1654",
+      "foreignKey": "#6a34c7",
       "index": "#6a5f6c",
       "modified": "#733a12",
-      "deleted": "#8c0032",
-      "new": "#3a0f4c"
+      "deleted": "#610023",
+      "new": "#7b20a1"
     }
   },
   "editor": {
@@ -77,14 +77,14 @@
       "editorSuggestWidget.border": "#c36b9f",
       "editorHoverWidget.background": "#ffd6ea",
       "editorHoverWidget.border": "#c36b9f",
-      "editor.findMatchBackground": "#cb7aa4",
-      "editor.findMatchHighlightBackground": "#d697b8",
+      "editor.findMatchBackground": "#dd762d",
+      "editor.findMatchHighlightBackground": "#e38d50",
       "editor.wordHighlightBackground": "#ffc2e0",
       "editorWhitespace.foreground": "#c36b9f",
       "scrollbarSlider.background": "#c36b9f99",
       "scrollbarSlider.hoverBackground": "#b3005caa",
       "editorError.foreground": "#990036",
-      "editorWarning.foreground": "#83335d"
+      "editorWarning.foreground": "#7b3f14"
     },
     "rules": [
       {

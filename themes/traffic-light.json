@@ -47,12 +47,12 @@
       "boolean": "#ffcc00",
       "date": "#2ea44f",
       "null": "#ff453a",
-      "primaryKey": "#ffe57f",
-      "foreignKey": "#49d06b",
+      "primaryKey": "#ffd324",
+      "foreignKey": "#34c95a",
       "index": "#8f8f94",
-      "modified": "#ffe57f",
-      "deleted": "#ff5147",
-      "new": "#49d06b"
+      "modified": "#ffdf63",
+      "deleted": "#ffb1ad",
+      "new": "#34c95a"
     }
   },
   "editor": {

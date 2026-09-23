@@ -59,7 +59,10 @@ def simulate(c, kind):
     return [min(1,max(0,g(v))) for v in out]
 
 def audit(path):
-    d = json.load(open(path)); c = d["colors"]; e = d["editor"]["colors"]; rules = d["editor"]["rules"]
+    d = json.load(open(path)); return d, audit_theme(d)
+
+def audit_theme(d):
+    c = d["colors"]; e = d["editor"]["colors"]; rules = d["editor"]["rules"]
     bg, sf, tx, ac, bd, sm = c["bg"], c["surface"], c["text"], c["accent"], c["border"], c["semantic"]
     R = []  # (id, status, ratio, need, desc)
     def chk(id_, fg, bgc, need, desc, base=None, warn=None):
@@ -139,47 +142,51 @@ def audit(path):
     chk("E5", e["editorWidget.border"], e["editorWidget.background"], 1.5, "widget border on widget background", warn=1.2)
     chk("E6", e["editorError.foreground"], eb, 3.0, "error squiggle on editor.background")
     chk("E6", e["editorWarning.foreground"], eb, 3.0, "warning squiggle on editor.background")
-    return d, R
+    return R
 
-def gh_escape(s, prop=False):
-    s = s.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
-    return s.replace(":", "%3A").replace(",", "%2C") if prop else s
+def main():
+    def gh_escape(s, prop=False):
+        s = s.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+        return s.replace(":", "%3A").replace(",", "%2C") if prop else s
 
-total = {"PASS":0,"WARN":0,"FAIL":0}
-summary = []
-for path in sorted(glob.glob(f"{ROOT}/*.json")):
-    d, R = audit(path)
-    n = {s: sum(1 for r in R if r[1]==s) for s in total}
-    for s in total: total[s] += n[s]
-    name = path.split("/")[-1][:-5]
-    print(f"\n=== {name} ({d['mode']}) — {n['PASS']} pass, {n['WARN']} warn, {n['FAIL']} fail")
-    for id_, st, r, need, desc in R:
-        if st != "PASS" or VERBOSE:
-            print(f"  {st:4} {id_:4} {r:6.2f} (need {need:>4}) {desc}")
-    summary.append((name, d["mode"], n, [x for x in R if x[1] != "PASS"]))
-    if GITHUB:
-        f = gh_escape(os.path.relpath(path), prop=True)
-        # one annotation per failing check; warnings folded per theme (GitHub caps annotations per step)
+    total = {"PASS":0,"WARN":0,"FAIL":0}
+    summary = []
+    for path in sorted(glob.glob(f"{ROOT}/*.json")):
+        d, R = audit(path)
+        n = {s: sum(1 for r in R if r[1]==s) for s in total}
+        for s in total: total[s] += n[s]
+        name = path.split("/")[-1][:-5]
+        print(f"\n=== {name} ({d['mode']}) — {n['PASS']} pass, {n['WARN']} warn, {n['FAIL']} fail")
         for id_, st, r, need, desc in R:
-            if st == "FAIL":
-                print(f"::error file={f},title={gh_escape(f'{name}: {id_}', prop=True)}::{gh_escape(f'{desc}: {r:.2f}, needs {need}')}")
-        warns = [x for x in R if x[1] == "WARN"]
-        if warns:
-            body = "\n".join(f"{id_} {r:.2f} (need {need}) {desc}" for id_, _, r, need, desc in warns)
-            print(f"::warning file={f},title={gh_escape(f'{name}: {len(warns)} accessibility warnings', prop=True)}::{gh_escape(body)}")
-print(f"\nTOTAL: {total}")
+            if st != "PASS" or VERBOSE:
+                print(f"  {st:4} {id_:4} {r:6.2f} (need {need:>4}) {desc}")
+        summary.append((name, d["mode"], n, [x for x in R if x[1] != "PASS"]))
+        if GITHUB:
+            f = gh_escape(os.path.relpath(path), prop=True)
+            # one annotation per failing check; warnings folded per theme (GitHub caps annotations per step)
+            for id_, st, r, need, desc in R:
+                if st == "FAIL":
+                    print(f"::error file={f},title={gh_escape(f'{name}: {id_}', prop=True)}::{gh_escape(f'{desc}: {r:.2f}, needs {need}')}")
+            warns = [x for x in R if x[1] == "WARN"]
+            if warns:
+                body = "\n".join(f"{id_} {r:.2f} (need {need}) {desc}" for id_, _, r, need, desc in warns)
+                print(f"::warning file={f},title={gh_escape(f'{name}: {len(warns)} accessibility warnings', prop=True)}::{gh_escape(body)}")
+    print(f"\nTOTAL: {total}")
 
-if GITHUB and os.environ.get("GITHUB_STEP_SUMMARY"):
-    with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as out:
-        out.write("## Accessibility audit\n\n| Variant | Mode | Pass | Warn | Fail |\n| --- | --- | ---: | ---: | ---: |\n")
-        for name, mode, n, _ in summary:
-            out.write(f"| {name} | {mode} | {n['PASS']} | {n['WARN']} | {n['FAIL']} |\n")
-        out.write(f"| **Total** | | {total['PASS']} | {total['WARN']} | {total['FAIL']} |\n")
-        for name, _, _, rows in summary:
-            if not rows: continue
-            out.write(f"\n<details><summary>{name}: {len(rows)} non-passing checks</summary>\n\n| Status | Check | Ratio | Needs | Pair |\n| --- | --- | ---: | ---: | --- |\n")
-            for id_, st, r, need, desc in rows:
-                pair = desc.replace("|", "\\|")
-                out.write(f"| {st} | {id_} | {r:.2f} | {need} | {pair} |\n")
-            out.write("\n</details>\n")
-sys.exit(1 if total["FAIL"] else 0)
+    if GITHUB and os.environ.get("GITHUB_STEP_SUMMARY"):
+        with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as out:
+            out.write("## Accessibility audit\n\n| Variant | Mode | Pass | Warn | Fail |\n| --- | --- | ---: | ---: | ---: |\n")
+            for name, mode, n, _ in summary:
+                out.write(f"| {name} | {mode} | {n['PASS']} | {n['WARN']} | {n['FAIL']} |\n")
+            out.write(f"| **Total** | | {total['PASS']} | {total['WARN']} | {total['FAIL']} |\n")
+            for name, _, _, rows in summary:
+                if not rows: continue
+                out.write(f"\n<details><summary>{name}: {len(rows)} non-passing checks</summary>\n\n| Status | Check | Ratio | Needs | Pair |\n| --- | --- | ---: | ---: | --- |\n")
+                for id_, st, r, need, desc in rows:
+                    pair = desc.replace("|", "\\|")
+                    out.write(f"| {st} | {id_} | {r:.2f} | {need} | {pair} |\n")
+                out.write("\n</details>\n")
+    sys.exit(1 if total["FAIL"] else 0)
+
+if __name__ == "__main__":
+    main()

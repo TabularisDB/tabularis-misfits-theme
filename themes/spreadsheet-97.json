@@ -30,7 +30,7 @@
     "accent": {
       "primary": "#000080",
       "secondary": "#005757",
-      "success": "#005c00",
+      "success": "#002900",
       "warning": "#4d4d00",
       "error": "#a30000",
       "info": "#0000ff"
@@ -47,12 +47,12 @@
       "boolean": "#800080",
       "date": "#005757",
       "null": "#4d4d4d",
-      "primaryKey": "#630000",
-      "foreignKey": "#000043",
+      "primaryKey": "#6b0000",
+      "foreignKey": "#00007e",
       "index": "#4f4f00",
-      "modified": "#0d0d00",
-      "deleted": "#9e0000",
-      "new": "#003700"
+      "modified": "#00007e",
+      "deleted": "#4c0000",
+      "new": "#004b00"
     }
   },
   "typography": {

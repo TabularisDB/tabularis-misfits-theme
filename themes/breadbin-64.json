@@ -5,54 +5,54 @@
   "attribution": "Breadbin 64 by Andrea Debernardi. Sixteen-color 1982 home computer palette on the classic blue screen with a lighter border. MIT licensed.",
   "colors": {
     "bg": {
-      "base": "#40318d",
-      "elevated": "#352879",
+      "base": "#352879",
+      "elevated": "#2c2166",
       "overlay": "#000000",
-      "input": "#352879",
-      "tooltip": "#352879"
+      "input": "#2c2166",
+      "tooltip": "#2c2166"
     },
     "surface": {
-      "primary": "#40318d",
-      "secondary": "#4a3a9a",
-      "tertiary": "#5a4bab",
-      "hover": "#4a3a9a",
-      "active": "#6857bd",
-      "disabled": "#352879"
+      "primary": "#352879",
+      "secondary": "#40318d",
+      "tertiary": "#4a3a9a",
+      "hover": "#40318d",
+      "active": "#6657b2",
+      "disabled": "#2c2166"
     },
     "text": {
       "primary": "#e6e2ff",
-      "secondary": "#ada4e9",
-      "muted": "#afa7e3",
-      "disabled": "#6556c9",
+      "secondary": "#a9a0e8",
+      "muted": "#a198de",
+      "disabled": "#4938af",
       "accent": "#aaffee",
       "inverse": "#000000"
     },
     "accent": {
       "primary": "#7869c4",
       "secondary": "#aaffee",
-      "success": "#00d659",
+      "success": "#00cc55",
       "warning": "#eeee77",
-      "error": "#ffaeae",
-      "info": "#8ac9ff"
+      "error": "#ff9595",
+      "info": "#6bbbff"
     },
     "border": {
       "subtle": "#4a3a9a",
-      "default": "#8f83ce",
+      "default": "#8274c8",
       "strong": "#aaffee",
       "focus": "#ffffff"
     },
     "semantic": {
       "string": "#eeee77",
       "number": "#aaffee",
-      "boolean": "#e68de6",
+      "boolean": "#e278e2",
       "date": "#aaff66",
-      "null": "#adadad",
-      "primaryKey": "#efc6ae",
-      "foreignKey": "#66b5ff",
-      "index": "#f6f0ff",
-      "modified": "#f6f6b9",
-      "deleted": "#e790e7",
-      "new": "#00ee63"
+      "null": "#a0a0a0",
+      "primaryKey": "#de8a58",
+      "foreignKey": "#5aaeff",
+      "index": "#ffb7ff",
+      "modified": "#ffff66",
+      "deleted": "#edaded",
+      "new": "#00d057"
     }
   },
   "typography": {
@@ -81,33 +81,33 @@
   },
   "editor": {
     "colors": {
-      "editor.background": "#40318d",
+      "editor.background": "#352879",
       "editor.foreground": "#e6e2ff",
-      "editor.lineHighlightBackground": "#352879",
-      "editor.selectionBackground": "#6857bd",
-      "editor.inactiveSelectionBackground": "#4a3a9a",
-      "editor.selectionHighlightBackground": "#5a4bab",
-      "editorCursor.foreground": "#8f83ce",
-      "editorLineNumber.foreground": "#afa7e3",
-      "editorLineNumber.activeForeground": "#ada4e9",
+      "editor.lineHighlightBackground": "#2c2166",
+      "editor.selectionBackground": "#6657b2",
+      "editor.inactiveSelectionBackground": "#40318d",
+      "editor.selectionHighlightBackground": "#4a3a9a",
+      "editorCursor.foreground": "#8274c8",
+      "editorLineNumber.foreground": "#a198de",
+      "editorLineNumber.activeForeground": "#a9a0e8",
       "editorIndentGuide.background": "#4a3a9a",
-      "editorIndentGuide.activeBackground": "#8f83ce",
+      "editorIndentGuide.activeBackground": "#8274c8",
       "editorBracketMatch.border": "#ffffff",
-      "editorBracketMatch.background": "#5a4bab",
-      "editorWidget.background": "#352879",
-      "editorWidget.border": "#8f83ce",
-      "editorSuggestWidget.background": "#352879",
-      "editorSuggestWidget.selectedBackground": "#4a3a9a",
-      "editorSuggestWidget.border": "#8f83ce",
-      "editorHoverWidget.background": "#352879",
-      "editorHoverWidget.border": "#8f83ce",
+      "editorBracketMatch.background": "#4a3a9a",
+      "editorWidget.background": "#2c2166",
+      "editorWidget.border": "#8274c8",
+      "editorSuggestWidget.background": "#2c2166",
+      "editorSuggestWidget.selectedBackground": "#40318d",
+      "editorSuggestWidget.border": "#8274c8",
+      "editorHoverWidget.background": "#2c2166",
+      "editorHoverWidget.border": "#8274c8",
       "editor.findMatchBackground": "#68680d",
       "editor.findMatchHighlightBackground": "#444408",
-      "editor.wordHighlightBackground": "#4a3a9a",
-      "editorWhitespace.foreground": "#8f83ce",
-      "scrollbarSlider.background": "#8f83ce99",
+      "editor.wordHighlightBackground": "#40318d",
+      "editorWhitespace.foreground": "#8274c8",
+      "scrollbarSlider.background": "#8274c899",
       "scrollbarSlider.hoverBackground": "#aaffeeaa",
-      "editorError.foreground": "#ffaeae",
+      "editorError.foreground": "#ff9595",
       "editorWarning.foreground": "#eeee77"
     },
     "rules": [
@@ -187,22 +187,22 @@
       },
       {
         "token": "comment",
-        "foreground": "#ada4e9",
+        "foreground": "#a9a0e8",
         "fontStyle": "italic"
       },
       {
         "token": "comment.sql",
-        "foreground": "#ada4e9",
+        "foreground": "#a9a0e8",
         "fontStyle": "italic"
       },
       {
         "token": "comment.quote",
-        "foreground": "#ada4e9",
+        "foreground": "#a9a0e8",
         "fontStyle": "italic"
       },
       {
         "token": "comment.quote.sql",
-        "foreground": "#ada4e9",
+        "foreground": "#a9a0e8",
         "fontStyle": "italic"
       },
       {
@@ -247,28 +247,28 @@
       },
       {
         "token": "identifier.quote",
-        "foreground": "#e68de6"
+        "foreground": "#e278e2"
       },
       {
         "token": "identifier.quote.sql",
-        "foreground": "#e68de6"
+        "foreground": "#e278e2"
       },
       {
         "token": "predefined",
-        "foreground": "#61b2ff"
+        "foreground": "#5cb0ff"
       },
       {
         "token": "predefined.sql",
-        "foreground": "#61b2ff"
+        "foreground": "#5cb0ff"
       },
       {
         "token": "invalid",
-        "foreground": "#ff8b8b",
+        "foreground": "#ff7777",
         "fontStyle": "underline"
       },
       {
         "token": "invalid.sql",
-        "foreground": "#ff8b8b",
+        "foreground": "#ff7777",
         "fontStyle": "underline"
       }
     ]

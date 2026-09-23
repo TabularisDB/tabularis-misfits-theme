@@ -5,54 +5,54 @@
   "attribution": "Hot Dog Stand by Andrea Debernardi. Ketchup, mustard and black, after the infamous 1992 desktop scheme. MIT licensed.",
   "colors": {
     "bg": {
-      "base": "#e00000",
-      "elevated": "#e00000",
+      "base": "#9c0000",
+      "elevated": "#9c0000",
       "overlay": "#000000",
-      "input": "#b00000",
-      "tooltip": "#b00000"
+      "input": "#800000",
+      "tooltip": "#800000"
     },
     "surface": {
-      "primary": "#e00000",
-      "secondary": "#c00000",
-      "tertiary": "#a00000",
-      "hover": "#c00000",
-      "active": "#7a0000",
-      "disabled": "#a00000"
+      "primary": "#9c0000",
+      "secondary": "#8c0000",
+      "tertiary": "#7a0000",
+      "hover": "#8c0000",
+      "active": "#520000",
+      "disabled": "#7a0000"
     },
     "text": {
       "primary": "#ffff00",
       "secondary": "#ffffff",
-      "muted": "#fff0e0",
-      "disabled": "#ff8080",
+      "muted": "#ffd9b3",
+      "disabled": "#e06060",
       "accent": "#ffff00",
       "inverse": "#000000"
     },
     "accent": {
       "primary": "#ffff00",
       "secondary": "#ffffff",
-      "success": "#ffff00",
+      "success": "#9dff9d",
       "warning": "#ffff00",
-      "error": "#f5f5f5",
-      "info": "#ffffff"
+      "error": "#ffffff",
+      "info": "#9deeff"
     },
     "border": {
       "subtle": "#000000",
-      "default": "#000000",
-      "strong": "#000000",
+      "default": "#e6b800",
+      "strong": "#ffff00",
       "focus": "#ffff00"
     },
     "semantic": {
       "string": "#ffffff",
       "number": "#ffff00",
-      "boolean": "#fff0e0",
+      "boolean": "#ffd9b3",
       "date": "#ffffff",
-      "null": "#fff1e2",
-      "primaryKey": "#ffff00",
-      "foreignKey": "#ffffff",
-      "index": "#c8ffff",
-      "modified": "#ffff00",
-      "deleted": "#c8ffff",
-      "new": "#ffffff"
+      "null": "#ffb2d8",
+      "primaryKey": "#f2f200",
+      "foreignKey": "#f4f4f4",
+      "index": "#7de8ff",
+      "modified": "#fcfc00",
+      "deleted": "#ffddee",
+      "new": "#00e600"
     }
   },
   "typography": {
@@ -80,33 +80,33 @@
   },
   "editor": {
     "colors": {
-      "editor.background": "#e00000",
+      "editor.background": "#9c0000",
       "editor.foreground": "#ffff00",
-      "editor.lineHighlightBackground": "#e00000",
-      "editor.selectionBackground": "#7a0000",
-      "editor.inactiveSelectionBackground": "#c00000",
-      "editor.selectionHighlightBackground": "#a00000",
+      "editor.lineHighlightBackground": "#9c0000",
+      "editor.selectionBackground": "#520000",
+      "editor.inactiveSelectionBackground": "#8c0000",
+      "editor.selectionHighlightBackground": "#7a0000",
       "editorCursor.foreground": "#ffff00",
-      "editorLineNumber.foreground": "#fff0e0",
+      "editorLineNumber.foreground": "#ffd9b3",
       "editorLineNumber.activeForeground": "#ffffff",
       "editorIndentGuide.background": "#000000",
-      "editorIndentGuide.activeBackground": "#000000",
+      "editorIndentGuide.activeBackground": "#e6b800",
       "editorBracketMatch.border": "#ffff00",
-      "editorBracketMatch.background": "#a00000",
-      "editorWidget.background": "#e00000",
-      "editorWidget.border": "#000000",
-      "editorSuggestWidget.background": "#e00000",
-      "editorSuggestWidget.selectedBackground": "#c00000",
-      "editorSuggestWidget.border": "#000000",
-      "editorHoverWidget.background": "#e00000",
-      "editorHoverWidget.border": "#000000",
+      "editorBracketMatch.background": "#7a0000",
+      "editorWidget.background": "#9c0000",
+      "editorWidget.border": "#e6b800",
+      "editorSuggestWidget.background": "#9c0000",
+      "editorSuggestWidget.selectedBackground": "#8c0000",
+      "editorSuggestWidget.border": "#e6b800",
+      "editorHoverWidget.background": "#9c0000",
+      "editorHoverWidget.border": "#e6b800",
       "editor.findMatchBackground": "#757500",
       "editor.findMatchHighlightBackground": "#4c4c00",
-      "editor.wordHighlightBackground": "#c00000",
-      "editorWhitespace.foreground": "#000000",
-      "scrollbarSlider.background": "#00000099",
-      "scrollbarSlider.hoverBackground": "#000000aa",
-      "editorError.foreground": "#f5f5f5",
+      "editor.wordHighlightBackground": "#8c0000",
+      "editorWhitespace.foreground": "#e6b800",
+      "scrollbarSlider.background": "#e6b80099",
+      "scrollbarSlider.hoverBackground": "#ffff00aa",
+      "editorError.foreground": "#ffffff",
       "editorWarning.foreground": "#ffff00"
     },
     "rules": [
@@ -186,22 +186,22 @@
       },
       {
         "token": "comment",
-        "foreground": "#fff0e0",
+        "foreground": "#ffd9b3",
         "fontStyle": "italic"
       },
       {
         "token": "comment.sql",
-        "foreground": "#fff0e0",
+        "foreground": "#ffd9b3",
         "fontStyle": "italic"
       },
       {
         "token": "comment.quote",
-        "foreground": "#fff0e0",
+        "foreground": "#ffd9b3",
         "fontStyle": "italic"
       },
       {
         "token": "comment.quote.sql",
-        "foreground": "#fff0e0",
+        "foreground": "#ffd9b3",
         "fontStyle": "italic"
       },
       {
@@ -214,27 +214,27 @@
       },
       {
         "token": "delimiter",
-        "foreground": "#fff0e0"
+        "foreground": "#ffd9b3"
       },
       {
         "token": "delimiter.sql",
-        "foreground": "#fff0e0"
+        "foreground": "#ffd9b3"
       },
       {
         "token": "delimiter.parenthesis",
-        "foreground": "#fff0e0"
+        "foreground": "#ffd9b3"
       },
       {
         "token": "delimiter.parenthesis.sql",
-        "foreground": "#fff0e0"
+        "foreground": "#ffd9b3"
       },
       {
         "token": "delimiter.square",
-        "foreground": "#fff0e0"
+        "foreground": "#ffd9b3"
       },
       {
         "token": "delimiter.square.sql",
-        "foreground": "#fff0e0"
+        "foreground": "#ffd9b3"
       },
       {
         "token": "identifier",
@@ -262,12 +262,12 @@
       },
       {
         "token": "invalid",
-        "foreground": "#c8ffff",
+        "foreground": "#9deeff",
         "fontStyle": "underline"
       },
       {
         "token": "invalid.sql",
-        "foreground": "#c8ffff",
+        "foreground": "#9deeff",
         "fontStyle": "underline"
       }
     ]

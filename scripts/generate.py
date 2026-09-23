@@ -1,4 +1,4 @@
-import json, os, colorsys
+import json, os, colorsys, importlib.util
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "themes")
 SCHEMA = "https://raw.githubusercontent.com/TabularisDB/tabularis/main/src/schemas/theme-definition-v1.json"
 AUTHOR = "Andrea Debernardi"
@@ -155,8 +155,12 @@ def finalize(c, tokens):
         target = (lum(tx["primary"])+0.05)/2.1 - 0.05 if dark else (lum(tx["primary"])+0.05)*2.1 - 0.05
         if 0.004 <= target <= 0.95:
             sm["null"] = fix_fg(set_lum(sm["null"], target), surfaces, 4.5)
-    # ---- editor, derived from the corrected palette
-    eb, ef = base, tx["primary"]
+    return c
+
+def derive_editor(c, tokens):
+    """Monaco colors and SQL token rules, derived from the corrected palette."""
+    bg, sf, tx, ac, bd = c["bg"], c["surface"], c["text"], c["accent"], c["border"]
+    dark = is_dark(bg["base"]); eb, ef = bg["base"], tx["primary"]
     tok = {k: fix_fg(v, [eb], 4.5) for k, v in tokens.items()}
     sel = fix_bg(sf["active"], ef, 4.5, eb)
     find = fix_bg(ac["warning"], ef, 4.5, eb)
@@ -185,15 +189,76 @@ def finalize(c, tokens):
         "scrollbarSlider.background": alpha(bd["default"], 0x99), "scrollbarSlider.hoverBackground": alpha(bd["strong"], 0xaa),
         "editorError.foreground": ac["error"], "editorWarning.foreground": ac["warning"],
     }
-    return c, {"colors": ed, "rules": rules(tok["kw"], tok["string"], tok["number"], tok["comment"], tok["op"], tok["delim"], tok["ident"], tok["identq"], tok["predef"], tok["invalid"])}
+    return {"colors": ed, "rules": rules(tok["kw"], tok["string"], tok["number"], tok["comment"], tok["op"], tok["delim"], tok["ident"], tok["identq"], tok["predef"], tok["invalid"])}
+
+# ---------- polish: the audit is the oracle ----------
+_spec = importlib.util.spec_from_file_location("a11y_audit", os.path.join(os.path.dirname(os.path.abspath(__file__)), "a11y-audit.py"))
+AUDIT = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(AUDIT)
+# colors the polish may move; always lightness only, so hue (the artistic intent) stays put
+TUNABLE = [("accent", k) for k in ("primary","secondary","success","warning","error","info")] + \
+          [("text", k) for k in ("primary","secondary","muted","accent","disabled")] + \
+          [("semantic", k) for k in ("null","primaryKey","foreignKey","index","modified","deleted","new")]
+
+def shortfall(d, tokens, intent):
+    d["editor"] = derive_editor(d["colors"], tokens)
+    # a small pull toward the palette as written, so the search prefers the closest passing
+    # color over one bleached to white or crushed to black (always < one warning)
+    total = sum(abs(L_of(d["colors"][g][k]) - L_of(intent[g][k])) for g, k in TUNABLE) * 0.01
+    for _, st, r, need, _ in AUDIT.audit_theme(d):
+        # count first, distance second (A10 can warn above its threshold, so clamp)
+        if st != "PASS": total += (1 + max(0.0, (need - r) / need)) * (100 if st == "FAIL" else 1)
+    return total
+
+DELTAS = (-0.2, -0.1, -0.04, -0.015, 0.015, 0.04, 0.1, 0.2)
+
+def moved(old, dl):
+    """old with its lightness shifted by dl, or None when that would push it into black/white."""
+    L = L_of(old) + dl
+    # near black/white the hue is gone: never push a color further out there
+    if not 0.06 <= L <= 0.94 and abs(L - 0.5) > abs(L_of(old) - 0.5): return None
+    return with_l(old, L)
+
+def polish(d, tokens, intent):
+    """Greedy lightness search over TUNABLE until every audit check passes or nothing improves.
+    Single-color moves first; when stuck, move a color named by a warning together with any other."""
+    c = d["colors"]; best = shortfall(d, tokens, intent)
+    while True:
+        move = None
+        for grp, k in TUNABLE:
+            old = c[grp][k]
+            for dl in DELTAS:
+                if not (new := moved(old, dl)): continue
+                c[grp][k] = new
+                s = shortfall(d, tokens, intent)
+                if s < best - 1e-9: best, move = s, [(grp, k, new)]
+            c[grp][k] = old
+        if not move:
+            d["editor"] = derive_editor(c, tokens)
+            named = {t for *_, desc in (r for r in AUDIT.audit_theme(d) if r[1] != "PASS")
+                     for t in TUNABLE if f"{t[0]}.{t[1]}" in desc or f" {t[1]} " in f" {desc} "}
+            for a in named:
+                for b in TUNABLE:
+                    if a == b: continue
+                    oa, ob = c[a[0]][a[1]], c[b[0]][b[1]]
+                    for da in DELTAS:
+                        if not (na := moved(oa, da)): continue
+                        for db in DELTAS:
+                            if not (nb := moved(ob, db)): continue
+                            c[a[0]][a[1]], c[b[0]][b[1]] = na, nb
+                            s = shortfall(d, tokens, intent)
+                            if s < best - 1e-9: best, move = s, [(*a, na), (*b, nb)]
+                    c[a[0]][a[1]], c[b[0]][b[1]] = oa, ob
+        if not move: break
+        for grp, k, v in move: c[grp][k] = v
+    d["editor"] = derive_editor(c, tokens)
 
 def theme(name, mode, note, colors, tokens, typography=None, layout=None):
-    colors, editor = finalize(colors, tokens)
+    intent = json.loads(json.dumps(colors))  # finalize() corrects in place
     d = {"$schema": SCHEMA, "schemaVersion": 1, "mode": mode,
-         "attribution": f"{name} by {AUTHOR}. {note} MIT licensed.", "colors": colors}
+         "attribution": f"{name} by {AUTHOR}. {note} MIT licensed.", "colors": finalize(colors, tokens)}
     if typography: d["typography"] = typography
     if layout: d["layout"] = layout
-    d["editor"] = editor
+    polish(d, tokens, intent)
     return d
 
 def tk(kw, string, number, comment, op, delim, ident, identq, predef, invalid):
@@ -211,19 +276,19 @@ T["spreadsheet-97"] = theme("Spreadsheet 97", "light",
    "accent": {"primary": "#000080", "secondary": "#008080", "success": "#008000", "warning": "#808000", "error": "#ff0000", "info": "#0000ff"},
    "border": {"subtle": "#dfdfdf", "default": "#808080", "strong": "#404040", "focus": "#000000"},
    "semantic": {"string": "#000000", "number": "#000080", "boolean": "#800080", "date": "#008080", "null": "#808080",
-                "primaryKey": "#800000", "foreignKey": "#000080", "index": "#808000", "modified": "#808000", "deleted": "#ff0000", "new": "#008000"}},
+                "primaryKey": "#800000", "foreignKey": "#000080", "index": "#808000", "modified": "#000080", "deleted": "#ff0000", "new": "#008000"}},
   tk("#0000ff", "#800000", "#000000", "#008000", "#000000", "#000000", "#000000", "#800080", "#000080", "#ff0000"), W95, SQUARE)
 
 T["hot-dog-stand"] = theme("Hot Dog Stand", "dark",
   "Ketchup, mustard and black, after the infamous 1992 desktop scheme.",
-  {"bg": {"base": "#e00000", "elevated": "#e00000", "overlay": "#000000", "input": "#b00000", "tooltip": "#b00000"},
-   "surface": {"primary": "#e00000", "secondary": "#c00000", "tertiary": "#a00000", "hover": "#c00000", "active": "#7a0000", "disabled": "#a00000"},
-   "text": {"primary": "#ffff00", "secondary": "#ffffff", "muted": "#ffe8d1", "disabled": "#ff8080", "accent": "#ffff00", "inverse": "#000000"},
-   "accent": {"primary": "#ffff00", "secondary": "#ffffff", "success": "#ffff00", "warning": "#ffff00", "error": "#000000", "info": "#ffffff"},
-   "border": {"subtle": "#000000", "default": "#000000", "strong": "#000000", "focus": "#ffff00"},
-   "semantic": {"string": "#ffffff", "number": "#ffff00", "boolean": "#ffe8d1", "date": "#ffffff", "null": "#ffe8d1",
-                "primaryKey": "#ffff00", "foreignKey": "#ffffff", "index": "#c8ffff", "modified": "#ffff00", "deleted": "#c8ffff", "new": "#ffffff"}},
-  tk("#ffffff", "#ffff00", "#ffff00", "#ffe8d1", "#ffffff", "#ffe8d1", "#ffff00", "#ffffff", "#ffffff", "#c8ffff"), W95, SQUARE)
+  {"bg": {"base": "#9c0000", "elevated": "#9c0000", "overlay": "#000000", "input": "#800000", "tooltip": "#800000"},
+   "surface": {"primary": "#9c0000", "secondary": "#8c0000", "tertiary": "#7a0000", "hover": "#8c0000", "active": "#520000", "disabled": "#7a0000"},
+   "text": {"primary": "#ffff00", "secondary": "#ffffff", "muted": "#ffd9b3", "disabled": "#e06060", "accent": "#ffff00", "inverse": "#000000"},
+   "accent": {"primary": "#ffff00", "secondary": "#ffffff", "success": "#9dff9d", "warning": "#ffff00", "error": "#ffffff", "info": "#9deeff"},
+   "border": {"subtle": "#000000", "default": "#e6b800", "strong": "#ffff00", "focus": "#ffff00"},
+   "semantic": {"string": "#ffffff", "number": "#ffff00", "boolean": "#ffd9b3", "date": "#ffffff", "null": "#ffb3d9",
+                "primaryKey": "#ffff00", "foreignKey": "#ffffff", "index": "#9deeff", "modified": "#ffff00", "deleted": "#ffb3d9", "new": "#9dff9d"}},
+  tk("#ffffff", "#ffff00", "#ffff00", "#ffd9b3", "#ffffff", "#ffd9b3", "#ffff00", "#ffffff", "#ffffff", "#9deeff"), W95, SQUARE)
 
 T["traffic-light"] = theme("Traffic Light", "dark",
   "Neutral graphite chrome; data follows road rules: red for NULL, amber for booleans, green for everything else.",
@@ -238,8 +303,8 @@ T["traffic-light"] = theme("Traffic Light", "dark",
 
 T["breadbin-64"] = theme("Breadbin 64", "dark",
   "Sixteen-color 1982 home computer palette on the classic blue screen with a lighter border.",
-  {"bg": {"base": "#40318d", "elevated": "#352879", "overlay": "#000000", "input": "#352879", "tooltip": "#352879"},
-   "surface": {"primary": "#40318d", "secondary": "#4a3a9a", "tertiary": "#5a4bab", "hover": "#4a3a9a", "active": "#7869c4", "disabled": "#352879"},
+  {"bg": {"base": "#352879", "elevated": "#2c2166", "overlay": "#000000", "input": "#2c2166", "tooltip": "#2c2166"},
+   "surface": {"primary": "#352879", "secondary": "#40318d", "tertiary": "#4a3a9a", "hover": "#40318d", "active": "#6c5eb5", "disabled": "#2c2166"},
    "text": {"primary": "#e6e2ff", "secondary": "#a9a0e8", "muted": "#9a90dc", "disabled": "#4a3a9a", "accent": "#aaffee", "inverse": "#000000"},
    "accent": {"primary": "#7869c4", "secondary": "#aaffee", "success": "#00cc55", "warning": "#eeee77", "error": "#ff7777", "info": "#0088ff"},
    "border": {"subtle": "#4a3a9a", "default": "#7869c4", "strong": "#aaffee", "focus": "#ffffff"},
@@ -275,7 +340,7 @@ T["bubblegum"] = theme("Bubblegum", "light",
   {"bg": {"base": "#ffe6f2", "elevated": "#ffd6ea", "overlay": "#fff0f7", "input": "#fff5fa", "tooltip": "#ffd6ea"},
    "surface": {"primary": "#ffd6ea", "secondary": "#ffc2e0", "tertiary": "#ffb3d9", "hover": "#ffb3d9", "active": "#ff9ccf", "disabled": "#ffd6ea"},
    "text": {"primary": "#4a1a33", "secondary": "#7a2f5a", "muted": "#8f4a70", "disabled": "#d9a6c2", "accent": "#b3005c", "inverse": "#4a1a33"},
-   "accent": {"primary": "#ff4fa3", "secondary": "#8a2be2", "success": "#a8207a", "warning": "#b3457f", "error": "#a3003a", "info": "#7a2ea6"},
+   "accent": {"primary": "#ff4fa3", "secondary": "#8a2be2", "success": "#1f7a5c", "warning": "#b35c1e", "error": "#a3003a", "info": "#7a2ea6"},
    "border": {"subtle": "#ffc2e0", "default": "#c97aa8", "strong": "#b3005c", "focus": "#b3005c"},
    "semantic": {"string": "#b3005c", "number": "#7a007a", "boolean": "#a01050", "date": "#5e2a8c", "null": "#8c7f86",
                 "primaryKey": "#c00068", "foreignKey": "#6a35c8", "index": "#6f6470", "modified": "#b85c1e", "deleted": "#a3003a", "new": "#7b1fa2"}},

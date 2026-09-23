@@ -10,12 +10,12 @@ them are declarative JSON, not executable plugins.
 | Variant | Mode | Background | Text | Accent | The idea |
 | --- | --- | --- | --- | --- | --- |
 | Spreadsheet 97 | light | `#c0c0c0` | `#000000` | `#000080` | A 1997 office suite: grey chrome, white cells, navy selection, square corners, system fonts. |
-| Hot Dog Stand | dark | `#e00000` | `#ffff00` | `#ffff00` | The infamous ketchup-and-mustard desktop scheme, red darkened a notch so mustard text reaches AA. You were warned. |
+| Hot Dog Stand | dark | `#9c0000` | `#ffff00` | `#ffff00` | The infamous ketchup-and-mustard desktop scheme with mustard borders, the red cooked a little darker so every pair reaches AA. You were warned. |
 | Traffic Light | dark | `#1a1c1f` | `#e8e8e8` | `#ffb300` | Neutral graphite chrome. Data follows road rules: `NULL` is red, booleans are amber, everything else is green. |
-| Breadbin 64 | dark | `#40318d` | `#e6e2ff` | `#7869c4` | The 1982 home computer: blue screen, lighter border, a sixteen-color palette for data types. |
+| Breadbin 64 | dark | `#352879` | `#e6e2ff` | `#7869c4` | The 1982 home computer: blue screen, lighter border, a sixteen-color palette for data types. |
 | Highlighter | light | `#ffffff` | `#1a1a1a` | `#ffe600` | Paper, ink and fluorescent markers. Selections and search hits are literally highlighted. |
 | Watermelon | light | `#fff0f2` | `#3b1f1f` | `#2e8b57` | Pink flesh, green rind, and dark seeds for `NULL`. |
-| Bubblegum | light | `#ffe6f2` | `#4a1a33` | `#ff4fa3` | Pink on pink on pink, from powder to fuchsia. |
+| Bubblegum | light | `#ffe6f2` | `#4a1a33` | `#ff4fa3` | Pink on pink on pink, from powder to fuchsia (status colors excepted, so success and warning never look alike). |
 | Green Rain | dark | `#000000` | `#00ff41` | `#00ff41` | Pure black and phosphor green. There is no spoon. |
 Spreadsheet 97, Hot Dog Stand and Breadbin 64 also set square corners and a period
 font stack through the theme's `typography` and `layout` sections. Fonts fall back
@@ -45,10 +45,14 @@ the color pairs Tabularis actually draws, with WCAG 2.2 thresholds:
   (`primaryKey` / `foreignKey` / `index`) are separated by luminance as well as hue, and
   checked under simulated protanopia, deuteranopia and tritanopia. `NULL` never looks like
   ordinary text. Status badges (`success` / `warning` / `error`) are checked for hue
-  distance as well; themes that deliberately share a hue (Hot Dog Stand) get a warning.
+  distance as well.
 
-The palettes in `scripts/generate.py` are the artistic intent; the generator then nudges
-lightness, never hue, until each pair passes, and writes `themes/*.json`. Run the audit with:
+The palettes in `scripts/generate.py` are the artistic intent. The generator first nudges
+lightness, never hue, until the basic pairs pass, then uses the audit itself as an oracle: a
+greedy search moves the lightness of accents, text and data colors (one at a time, then in
+pairs) until no check warns, preferring the passing color closest to the palette as written,
+and never pushing a color into pure white or black. It then writes `themes/*.json`. Run the
+audit with:
 
 ```sh
 python3 scripts/a11y-audit.py          # summary, non-passing checks only
@@ -60,13 +64,11 @@ request that touches `themes/` or the script: a failing pair fails the check and
 annotated on the theme file, warnings are grouped into one annotation per variant, and the
 job summary shows a pass/warn/fail table.
 
-Known limits, reported as warnings rather than failures: Hot Dog Stand can only use very
-light colors on its red, so its row states and key kinds differ by hue alone (yellow, white,
-cyan) and are hard to tell apart under tritanopia; its success, warning and primary accents
-are all mustard by design, so status badges tell apart by icon and label only, and yellow
-text on yellow-tinted selections lands just under AA. Breadbin 64's blue screen leaves room
-for three luminance steps of 1.4:1 instead of 1.5:1. Pending deletes are faded on purpose
-and only need the 3:1 non-text ratio.
+Every variant currently passes every check with no warnings. Pending deletes are faded on
+purpose, so they are held to the 3:1 non-text ratio rather than 4.5:1. Accessibility cost a
+few liberties with the originals: Hot Dog Stand's red is darker than the 1992 scheme and its
+borders are mustard (black lines do not reach 3:1 on a red dark enough for AA text), and
+Breadbin 64 uses the darker of the two classic blues as its screen.
 
 ## Compatibility
 
