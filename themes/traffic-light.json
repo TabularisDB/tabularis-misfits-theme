@@ -1,0 +1,252 @@
+{
+  "$schema": "https://raw.githubusercontent.com/TabularisDB/tabularis/main/src/schemas/theme-definition-v1.json",
+  "schemaVersion": 1,
+  "mode": "dark",
+  "attribution": "Traffic Light by Andrea Debernardi. Neutral graphite chrome; data follows road rules: red for NULL, amber for booleans, green for everything else. MIT licensed.",
+  "colors": {
+    "bg": {
+      "base": "#1a1c1f",
+      "elevated": "#202327",
+      "overlay": "#2a2e33",
+      "input": "#15171a",
+      "tooltip": "#2a2e33"
+    },
+    "surface": {
+      "primary": "#22252a",
+      "secondary": "#2c3036",
+      "tertiary": "#383d44",
+      "hover": "#2c3036",
+      "active": "#8a6100",
+      "disabled": "#22252a"
+    },
+    "text": {
+      "primary": "#e8e8e8",
+      "secondary": "#b0b4ba",
+      "muted": "#878c92",
+      "disabled": "#4d5157",
+      "accent": "#ffb300",
+      "inverse": "#000000"
+    },
+    "accent": {
+      "primary": "#ffb300",
+      "secondary": "#34c759",
+      "success": "#34c759",
+      "warning": "#ffcc00",
+      "error": "#ff7f77",
+      "info": "#b0b4ba"
+    },
+    "border": {
+      "subtle": "#2a2e33",
+      "default": "#5f6874",
+      "strong": "#63686f",
+      "focus": "#ffb300"
+    },
+    "semantic": {
+      "string": "#34c759",
+      "number": "#5ad67a",
+      "boolean": "#ffcc00",
+      "date": "#2ea44f",
+      "null": "#ff453a",
+      "primaryKey": "#ffe57f",
+      "foreignKey": "#49d06b",
+      "index": "#8f8f94",
+      "modified": "#ffe57f",
+      "deleted": "#ff5147",
+      "new": "#49d06b"
+    }
+  },
+  "editor": {
+    "colors": {
+      "editor.background": "#1a1c1f",
+      "editor.foreground": "#e8e8e8",
+      "editor.lineHighlightBackground": "#202327",
+      "editor.selectionBackground": "#8a6100",
+      "editor.inactiveSelectionBackground": "#2c3036",
+      "editor.selectionHighlightBackground": "#383d44",
+      "editorCursor.foreground": "#ffb300",
+      "editorLineNumber.foreground": "#878c92",
+      "editorLineNumber.activeForeground": "#b0b4ba",
+      "editorIndentGuide.background": "#2a2e33",
+      "editorIndentGuide.activeBackground": "#5f6874",
+      "editorBracketMatch.border": "#ffb300",
+      "editorBracketMatch.background": "#383d44",
+      "editorWidget.background": "#202327",
+      "editorWidget.border": "#5f6874",
+      "editorSuggestWidget.background": "#202327",
+      "editorSuggestWidget.selectedBackground": "#2c3036",
+      "editorSuggestWidget.border": "#5f6874",
+      "editorHoverWidget.background": "#202327",
+      "editorHoverWidget.border": "#5f6874",
+      "editor.findMatchBackground": "#7f6600",
+      "editor.findMatchHighlightBackground": "#564500",
+      "editor.wordHighlightBackground": "#2c3036",
+      "editorWhitespace.foreground": "#5f6874",
+      "scrollbarSlider.background": "#5f687499",
+      "scrollbarSlider.hoverBackground": "#63686faa",
+      "editorError.foreground": "#ff7f77",
+      "editorWarning.foreground": "#ffcc00"
+    },
+    "rules": [
+      {
+        "token": "keyword",
+        "foreground": "#ffcc00",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.sql",
+        "foreground": "#ffcc00",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.block",
+        "foreground": "#ffcc00",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.block.sql",
+        "foreground": "#ffcc00",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.choice",
+        "foreground": "#ffcc00",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.choice.sql",
+        "foreground": "#ffcc00",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.try",
+        "foreground": "#ffcc00",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.try.sql",
+        "foreground": "#ffcc00",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.catch",
+        "foreground": "#ffcc00",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.catch.sql",
+        "foreground": "#ffcc00",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "string",
+        "foreground": "#34c759"
+      },
+      {
+        "token": "string.sql",
+        "foreground": "#34c759"
+      },
+      {
+        "token": "string.quote",
+        "foreground": "#34c759"
+      },
+      {
+        "token": "string.quote.sql",
+        "foreground": "#34c759"
+      },
+      {
+        "token": "number",
+        "foreground": "#5ad67a"
+      },
+      {
+        "token": "number.sql",
+        "foreground": "#5ad67a"
+      },
+      {
+        "token": "comment",
+        "foreground": "#85858a",
+        "fontStyle": "italic"
+      },
+      {
+        "token": "comment.sql",
+        "foreground": "#85858a",
+        "fontStyle": "italic"
+      },
+      {
+        "token": "comment.quote",
+        "foreground": "#85858a",
+        "fontStyle": "italic"
+      },
+      {
+        "token": "comment.quote.sql",
+        "foreground": "#85858a",
+        "fontStyle": "italic"
+      },
+      {
+        "token": "operator",
+        "foreground": "#ff9500"
+      },
+      {
+        "token": "operator.sql",
+        "foreground": "#ff9500"
+      },
+      {
+        "token": "delimiter",
+        "foreground": "#b0b4ba"
+      },
+      {
+        "token": "delimiter.sql",
+        "foreground": "#b0b4ba"
+      },
+      {
+        "token": "delimiter.parenthesis",
+        "foreground": "#b0b4ba"
+      },
+      {
+        "token": "delimiter.parenthesis.sql",
+        "foreground": "#b0b4ba"
+      },
+      {
+        "token": "delimiter.square",
+        "foreground": "#b0b4ba"
+      },
+      {
+        "token": "delimiter.square.sql",
+        "foreground": "#b0b4ba"
+      },
+      {
+        "token": "identifier",
+        "foreground": "#e8e8e8"
+      },
+      {
+        "token": "identifier.sql",
+        "foreground": "#e8e8e8"
+      },
+      {
+        "token": "identifier.quote",
+        "foreground": "#ffcc00"
+      },
+      {
+        "token": "identifier.quote.sql",
+        "foreground": "#ffcc00"
+      },
+      {
+        "token": "predefined",
+        "foreground": "#5ad67a"
+      },
+      {
+        "token": "predefined.sql",
+        "foreground": "#5ad67a"
+      },
+      {
+        "token": "invalid",
+        "foreground": "#ff3b30",
+        "fontStyle": "underline"
+      },
+      {
+        "token": "invalid.sql",
+        "foreground": "#ff3b30",
+        "fontStyle": "underline"
+      }
+    ]
+  }
+}

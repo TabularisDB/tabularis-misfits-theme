@@ -1,0 +1,276 @@
+{
+  "$schema": "https://raw.githubusercontent.com/TabularisDB/tabularis/main/src/schemas/theme-definition-v1.json",
+  "schemaVersion": 1,
+  "mode": "dark",
+  "attribution": "Breadbin 64 by Andrea Debernardi. Sixteen-color 1982 home computer palette on the classic blue screen with a lighter border. MIT licensed.",
+  "colors": {
+    "bg": {
+      "base": "#40318d",
+      "elevated": "#352879",
+      "overlay": "#000000",
+      "input": "#352879",
+      "tooltip": "#352879"
+    },
+    "surface": {
+      "primary": "#40318d",
+      "secondary": "#4a3a9a",
+      "tertiary": "#5a4bab",
+      "hover": "#4a3a9a",
+      "active": "#6857bd",
+      "disabled": "#352879"
+    },
+    "text": {
+      "primary": "#e6e2ff",
+      "secondary": "#ada4e9",
+      "muted": "#afa7e3",
+      "disabled": "#6556c9",
+      "accent": "#aaffee",
+      "inverse": "#000000"
+    },
+    "accent": {
+      "primary": "#7869c4",
+      "secondary": "#aaffee",
+      "success": "#00d659",
+      "warning": "#eeee77",
+      "error": "#ffaeae",
+      "info": "#8ac9ff"
+    },
+    "border": {
+      "subtle": "#4a3a9a",
+      "default": "#8f83ce",
+      "strong": "#aaffee",
+      "focus": "#ffffff"
+    },
+    "semantic": {
+      "string": "#eeee77",
+      "number": "#aaffee",
+      "boolean": "#e68de6",
+      "date": "#aaff66",
+      "null": "#adadad",
+      "primaryKey": "#efc6ae",
+      "foreignKey": "#66b5ff",
+      "index": "#f6f0ff",
+      "modified": "#f6f6b9",
+      "deleted": "#e790e7",
+      "new": "#00ee63"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "base": [
+        "C64 Pro",
+        "Press Start 2P",
+        "Verdana",
+        "sans-serif"
+      ],
+      "mono": [
+        "C64 Pro Mono",
+        "Press Start 2P",
+        "Courier New",
+        "monospace"
+      ]
+    }
+  },
+  "layout": {
+    "borderRadius": {
+      "sm": 0,
+      "base": 0,
+      "lg": 0,
+      "xl": 0
+    }
+  },
+  "editor": {
+    "colors": {
+      "editor.background": "#40318d",
+      "editor.foreground": "#e6e2ff",
+      "editor.lineHighlightBackground": "#352879",
+      "editor.selectionBackground": "#6857bd",
+      "editor.inactiveSelectionBackground": "#4a3a9a",
+      "editor.selectionHighlightBackground": "#5a4bab",
+      "editorCursor.foreground": "#8f83ce",
+      "editorLineNumber.foreground": "#afa7e3",
+      "editorLineNumber.activeForeground": "#ada4e9",
+      "editorIndentGuide.background": "#4a3a9a",
+      "editorIndentGuide.activeBackground": "#8f83ce",
+      "editorBracketMatch.border": "#ffffff",
+      "editorBracketMatch.background": "#5a4bab",
+      "editorWidget.background": "#352879",
+      "editorWidget.border": "#8f83ce",
+      "editorSuggestWidget.background": "#352879",
+      "editorSuggestWidget.selectedBackground": "#4a3a9a",
+      "editorSuggestWidget.border": "#8f83ce",
+      "editorHoverWidget.background": "#352879",
+      "editorHoverWidget.border": "#8f83ce",
+      "editor.findMatchBackground": "#68680d",
+      "editor.findMatchHighlightBackground": "#444408",
+      "editor.wordHighlightBackground": "#4a3a9a",
+      "editorWhitespace.foreground": "#8f83ce",
+      "scrollbarSlider.background": "#8f83ce99",
+      "scrollbarSlider.hoverBackground": "#aaffeeaa",
+      "editorError.foreground": "#ffaeae",
+      "editorWarning.foreground": "#eeee77"
+    },
+    "rules": [
+      {
+        "token": "keyword",
+        "foreground": "#aaffee",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.sql",
+        "foreground": "#aaffee",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.block",
+        "foreground": "#aaffee",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.block.sql",
+        "foreground": "#aaffee",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.choice",
+        "foreground": "#aaffee",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.choice.sql",
+        "foreground": "#aaffee",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.try",
+        "foreground": "#aaffee",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.try.sql",
+        "foreground": "#aaffee",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.catch",
+        "foreground": "#aaffee",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "keyword.catch.sql",
+        "foreground": "#aaffee",
+        "fontStyle": "bold"
+      },
+      {
+        "token": "string",
+        "foreground": "#eeee77"
+      },
+      {
+        "token": "string.sql",
+        "foreground": "#eeee77"
+      },
+      {
+        "token": "string.quote",
+        "foreground": "#eeee77"
+      },
+      {
+        "token": "string.quote.sql",
+        "foreground": "#eeee77"
+      },
+      {
+        "token": "number",
+        "foreground": "#aaff66"
+      },
+      {
+        "token": "number.sql",
+        "foreground": "#aaff66"
+      },
+      {
+        "token": "comment",
+        "foreground": "#ada4e9",
+        "fontStyle": "italic"
+      },
+      {
+        "token": "comment.sql",
+        "foreground": "#ada4e9",
+        "fontStyle": "italic"
+      },
+      {
+        "token": "comment.quote",
+        "foreground": "#ada4e9",
+        "fontStyle": "italic"
+      },
+      {
+        "token": "comment.quote.sql",
+        "foreground": "#ada4e9",
+        "fontStyle": "italic"
+      },
+      {
+        "token": "operator",
+        "foreground": "#ffffff"
+      },
+      {
+        "token": "operator.sql",
+        "foreground": "#ffffff"
+      },
+      {
+        "token": "delimiter",
+        "foreground": "#bbbbbb"
+      },
+      {
+        "token": "delimiter.sql",
+        "foreground": "#bbbbbb"
+      },
+      {
+        "token": "delimiter.parenthesis",
+        "foreground": "#bbbbbb"
+      },
+      {
+        "token": "delimiter.parenthesis.sql",
+        "foreground": "#bbbbbb"
+      },
+      {
+        "token": "delimiter.square",
+        "foreground": "#bbbbbb"
+      },
+      {
+        "token": "delimiter.square.sql",
+        "foreground": "#bbbbbb"
+      },
+      {
+        "token": "identifier",
+        "foreground": "#e6e2ff"
+      },
+      {
+        "token": "identifier.sql",
+        "foreground": "#e6e2ff"
+      },
+      {
+        "token": "identifier.quote",
+        "foreground": "#e68de6"
+      },
+      {
+        "token": "identifier.quote.sql",
+        "foreground": "#e68de6"
+      },
+      {
+        "token": "predefined",
+        "foreground": "#61b2ff"
+      },
+      {
+        "token": "predefined.sql",
+        "foreground": "#61b2ff"
+      },
+      {
+        "token": "invalid",
+        "foreground": "#ff8b8b",
+        "fontStyle": "underline"
+      },
+      {
+        "token": "invalid.sql",
+        "foreground": "#ff8b8b",
+        "fontStyle": "underline"
+      }
+    ]
+  }
+}

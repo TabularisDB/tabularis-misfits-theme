@@ -1,0 +1,34 @@
+{
+  "$schema": "https://registry.tabularis.dev/manifest.schema.json?kind=theme",
+  "id": "misfits-theme",
+  "name": "Misfits Theme Pack for Tabularis",
+  "description": "Eight deliberately odd themes for Tabularis: a 1997 spreadsheet, the infamous Hot Dog Stand, traffic-light data colors, a 1982 home computer, fluorescent highlighters, watermelon, bubblegum and phosphor-green rain.",
+  "license": "MIT",
+  "tags": [
+    "theme",
+    "pack",
+    "retro",
+    "fun",
+    "dark",
+    "light"
+  ],
+  "readme": "README.md",
+  "homepage": "https://github.com/TabularisDB/tabularis-misfits-theme",
+  "support": {
+    "issues_url": "https://github.com/TabularisDB/tabularis-misfits-theme/issues"
+  },
+  "version": "1.0.1",
+  "kind": "theme",
+  "min_runtime_version": "0.25.1-1",
+  "theme_schema_version": 1,
+  "theme_variants": [
+    { "id": "spreadsheet-97", "name": "Spreadsheet 97", "file": "themes/spreadsheet-97.json" },
+    { "id": "hot-dog-stand", "name": "Hot Dog Stand", "file": "themes/hot-dog-stand.json" },
+    { "id": "traffic-light", "name": "Traffic Light", "file": "themes/traffic-light.json" },
+    { "id": "breadbin-64", "name": "Breadbin 64", "file": "themes/breadbin-64.json" },
+    { "id": "highlighter", "name": "Highlighter", "file": "themes/highlighter.json" },
+    { "id": "watermelon", "name": "Watermelon", "file": "themes/watermelon.json" },
+    { "id": "bubblegum", "name": "Bubblegum", "file": "themes/bubblegum.json" },
+    { "id": "green-rain", "name": "Green Rain", "file": "themes/green-rain.json" }
+  ]
+}

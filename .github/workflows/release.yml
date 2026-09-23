@@ -1,0 +1,42 @@
+name: Release theme
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+concurrency:
+  group: theme-release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Check that the tag matches the manifest version
+        env:
+          TAG_VERSION: ${{ github.ref_name }}
+        run: |
+          MANIFEST_VERSION=$(jq -r .version .tabularium)
+          if [ "${TAG_VERSION#v}" != "$MANIFEST_VERSION" ]; then
+            echo "::error::Tag version (${TAG_VERSION#v}) does not match .tabularium version ($MANIFEST_VERSION)"
+            exit 1
+          fi
+      - name: Accessibility audit of every variant
+        run: python3 scripts/a11y-audit.py --github
+      - name: Validate against the live registry schema
+        run: npx --yes @tabularium/cli validate .tabularium --registry https://registry.tabularis.dev --kind theme
+      - name: Build the universal package
+        run: zip -X -D -r theme-universal.zip .tabularium LICENSE.txt README.md themes
+      - name: Create a draft release for review
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          THEME_TAG: ${{ github.ref_name }}
+        run: gh release create "$THEME_TAG" theme-universal.zip --verify-tag --draft --generate-notes

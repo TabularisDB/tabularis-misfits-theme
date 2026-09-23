@@ -1,0 +1,30 @@
+name: Accessibility
+on:
+  push:
+    branches: ['**']
+    paths:
+      - 'themes/**'
+      - 'scripts/a11y-audit.py'
+      - '.github/workflows/accessibility.yml'
+  pull_request:
+    paths:
+      - 'themes/**'
+      - 'scripts/a11y-audit.py'
+      - '.github/workflows/accessibility.yml'
+permissions:
+  contents: read
+concurrency:
+  group: theme-accessibility-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  audit:
+    name: WCAG and color-blind audit
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # Dependency-free script. Failures annotate the theme file and fail the check;
+      # warnings (documented known limits) are folded into one annotation per variant.
+      - name: Audit every variant
+        run: python3 scripts/a11y-audit.py --github
